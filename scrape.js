@@ -22,6 +22,7 @@ function crawl(wiki, size, directory, callback) {
         (url.indexOf('/w/index.php') === -1) &&
         (url.indexOf(':') === -1) &&
         (urls.indexOf(url) === -1) &&
+        isNaN(url[6] * 1) &&
         (readArticles.indexOf(url) === -1)) {
         urls.push(url);
       }
@@ -57,7 +58,7 @@ function crawl(wiki, size, directory, callback) {
 
       // make sure redirect didn't give us a repeat article
       let finalUrl = resp.request.uri.path;
-      if (readArticles.indexOf(finalUrl) > -1) {
+      if (readArticles.indexOf(finalUrl) > -1 || !isNaN(finalUrl[6] * 1)) {
         setTimeout(() => {
           scrapeArticles(articles, i + 1);
         }, 250);
