@@ -18,7 +18,7 @@ function crawl(wiki, size, directory, callback) {
       let url = $(links[i]).attr('href');
       // avoid special pages, internal links, outside links, etc
       if (url &&
-        (url[0] !== '#') &&
+        (url.indexOf('#') === -1) &&
         (url.indexOf('/w/index.php') === -1) &&
         (url.indexOf(':') === -1) &&
         (urls.indexOf(url) === -1) &&
