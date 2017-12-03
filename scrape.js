@@ -63,6 +63,7 @@ function crawl(wiki, size, directory, callback) {
         }, 250);
         return;
       }
+      readArticles.push(finalUrl);
 
       let $ = cheerio.load(body);
       // get rid of citation links
