@@ -1,0 +1,23 @@
+{
+  "name": "build-source-text",
+  "version": "1.0.0",
+  "description": "Collect a specified amount of plaintext from a language Wikipedia",
+  "main": "scrape.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mapmeld/build-source-text.git"
+  },
+  "author": "Nick Doiron <ndoiron@mapmeld.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mapmeld/build-source-text/issues"
+  },
+  "homepage": "https://github.com/mapmeld/build-source-text#readme",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.2",
+    "request": "^2.83.0"
+  }
+}
