@@ -1,3 +1,2 @@
-- enable random
 - handle mid-page links (ISO_639-3#TTT.txt)
 - correct length of content downloaded?

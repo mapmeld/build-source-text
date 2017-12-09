@@ -2,7 +2,7 @@ const fs = require('fs');
 const request = require('request');
 const cheerio = require('cheerio');
 
-function crawl(wiki, size, directory, callback) {
+function crawl(wiki, size, directory, callback, actuallyRandom) {
   let charLimit = size * 1024 * 1024;
   if (isNaN(charLimit)) {
     return callback('size is not a valid Number');
@@ -77,12 +77,19 @@ function crawl(wiki, size, directory, callback) {
       });
 
       // grab article title (as entered)
-      let articleTitle = articles[i].split('/');
+      let articleTitle = finalUrl.split('/');
       articleTitle = articleTitle[articleTitle.length - 1];
       fs.writeFileSync(directory + '/' + decodeURI(articleTitle).substring(0, 100) + '.txt', articleText);
 
       articles[i] = $('body').html();
       charLimit -= articleText.length;
+
+      if (actuallyRandom) {
+        if (charLimit <= 0) {
+          return callback();
+        }
+        return scrapeArticles(['/wiki/Special:Random'], 0);
+      }
 
       if (charLimit > 0) {
         setTimeout(() => {
@@ -92,22 +99,27 @@ function crawl(wiki, size, directory, callback) {
     });
   }
 
-  // start on the Main Page
-  request('https://' + wiki + '.wikipedia.org/', (err, resp, body) => {
-    if (err) {
-      return callback(err);
-    }
+  if (actuallyRandom) {
+    // continually hit Special:Random
+    scrapeArticles(['/wiki/Special:Random'], 0);
+  } else {
+    // start on the Main Page
+    request('https://' + wiki + '.wikipedia.org/', (err, resp, body) => {
+      if (err) {
+        return callback(err);
+      }
 
-    let articles = findLinks(body);
-    if (!articles.length) {
-      return callback('main page did not have any useful links');
-    }
-    scrapeArticles(articles, 0);
-  });
+      let articles = findLinks(body);
+      if (!articles.length) {
+        return callback('main page did not have any useful links');
+      }
+      scrapeArticles(articles, 0);
+    });
+  }
 }
 
 function random(wiki, size, directory, callback) {
-
+  return crawl(wiki, size, directory, callback, true);
 }
 
 module.exports = {

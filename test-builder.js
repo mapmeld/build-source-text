@@ -6,7 +6,7 @@ let size = 7; // MB
 let directory = './burmese'; // output for articles
 
 // starts on the main page and crawls links (most significant articles first)
-builder.crawl(wiki, size, directory, (err) => {
+builder.random(wiki, size, directory, (err) => {
   if (err) {
     throw err;
   }
