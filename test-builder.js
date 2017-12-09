@@ -1,9 +1,9 @@
 
 const builder = require('./scrape');
 
-let wiki = 'eo'; // Esperanto
-let size = 10; // MB
-let directory = './esperanto'; // output for articles
+let wiki = 'my'; // Esperanto
+let size = 7; // MB
+let directory = './burmese'; // output for articles
 
 // starts on the main page and crawls links (most significant articles first)
 builder.crawl(wiki, size, directory, (err) => {

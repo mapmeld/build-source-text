@@ -79,7 +79,7 @@ function crawl(wiki, size, directory, callback) {
       // grab article title (as entered)
       let articleTitle = articles[i].split('/');
       articleTitle = articleTitle[articleTitle.length - 1];
-      fs.writeFileSync(directory + '/' + articleTitle + '.txt', articleText);
+      fs.writeFileSync(directory + '/' + decodeURI(articleTitle).substring(0, 100) + '.txt', articleText);
 
       articles[i] = $('body').html();
       charLimit -= articleText.length;
